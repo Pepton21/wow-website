@@ -16,7 +16,7 @@ def get_alchemy_connection_string():
     return "postgres://" + USER + ":" + get_password() + "@" + HOST + ":" + PORT + "/" + DATABASE
 
 def get_encrypted_password():
-        return os.environ['pwd']
+        return "place holder"#os.environ['pwd']
 
 def get_password():
     cipher = crypto.AESCipher(SECRET_PHRASE)
