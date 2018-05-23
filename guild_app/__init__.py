@@ -2,7 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-import cmdb_app.views
+import guild_app.views
 from guild_app.database import db_session
 
 @app.teardown_appcontext
