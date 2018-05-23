@@ -1,0 +1,8 @@
+gunicorn
+Flask
+flask_sso
+sqlalchemy
+pycrypto
+requests
+psycopg2
+pytz
