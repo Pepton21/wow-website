@@ -1,0 +1,188 @@
+{% extends 'layout.html' %}
+{% block head %}
+    {{ super() }}
+    <title>Member Info</title>
+    <script>var whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: false};</script>
+    <script src="//wow.zamimg.com/widgets/power.js"></script>
+    <style>
+
+        .right-item{
+            text-align: right;
+            float: right;
+            width: 50%;
+            margin-top: 20px;
+        }
+        .left-item{
+            margin-top: 20px;
+            text-align: left;
+            float: left;
+            width: 50%;
+        }
+    </style>
+{% endblock%}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Member Info</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2">
+        <div class="hero-widget well well-sm">
+            <div class="icon">
+                <img  src=" http://render-eu.worldofwarcraft.com/character/{{ result['guild_member']['thumbnail']}}">
+            </div>
+            <div class="text">
+                <h3 class="text-warning"><b> {{ result['guild_member']['name'] }}</b></h3>
+                <hr/>
+                <h4>Level {{ result['guild_member']['level'] }} {{ result['race_map'][result['guild_member']['race']] }} <span style="color: {{ result['class_colors'][result['class_map'][result['guild_member']['class']]] }}"><b>{{ result['class_map'][result['guild_member']['class']] }}</b></span> </h4>
+                <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-trophy"></i></button>
+                <span style="color:#FFC31E;"><b> {{ result['guild_member']['achievementPoints'] }} </b></span>
+                <button type="button" class="btn btn-danger btn-circle" style="background-color:#999999; border-color: #999999; margin-left:15px"><i class="fa" style="font-size: 18px">&#x2694</i></button>
+                <span style="color:#999999;"><b> {{ result['guild_member']['items']['averageItemLevel'] }} ilvl ({{ result['guild_member']['items']['averageItemLevelEquipped'] }} equipped) </b></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-2">
+     </div>
+    <div class="col-lg-5" style="">
+        <!--<img alt="Character picture not found by Blizzard API"  src=" http://render-eu.worldofwarcraft.com/character/{{ result['guild_member']['thumbnail'] | replace('avatar.jpg', 'profilemain.jpg')}}">-->
+        <div style="background-size: cover; overflow: hidden; width: 740px; background-image: url('http://render-eu.worldofwarcraft.com/character/{{ result['guild_member']['thumbnail'] | replace('avatar.jpg', 'profilemain.jpg')}}')">
+            <div class="left-item">
+                {% if result['guild_member']['items'].head %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['head']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['head']['icon'] }}.jpg"/> {{ result['guild_member']['items']['head']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/head.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].hands %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['hands']['id'] }}">{{ result['guild_member']['items']['hands']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['hands']['icon'] }}.jpg"/>  </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/hands.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].neck %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['neck']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['neck']['icon'] }}.jpg"/> {{ result['guild_member']['items']['neck']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/neck.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].waist %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['waist']['id'] }}">{{ result['guild_member']['items']['waist']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['waist']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/waist.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].shoulder %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['shoulder']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['shoulder']['icon'] }}.jpg"/> {{ result['guild_member']['items']['shoulder']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/shoulder.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].legs %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['legs']['id'] }}">{{ result['guild_member']['items']['legs']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['legs']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/legs.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].back %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['back']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['back']['icon'] }}.jpg"/> {{ result['guild_member']['items']['back']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/back.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].feet %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['feet']['id'] }}">{{ result['guild_member']['items']['feet']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['feet']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/feet.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].chest %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['chest']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['chest']['icon'] }}.jpg"/> {{ result['guild_member']['items']['chest']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/chest.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].finger1 %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['finger1']['id'] }}">{{ result['guild_member']['items']['finger1']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['finger1']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/finger.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].shirt %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['shirt']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['shirt']['icon'] }}.jpg"/> {{ result['guild_member']['items']['shirt']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/shirt.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].finger2 %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['finger2']['id'] }}">{{ result['guild_member']['items']['finger2']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['finger2']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/finger.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].tabard %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['tabard']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['tabard']['icon'] }}.jpg"/> {{ result['guild_member']['items']['tabard']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/tabard.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].trinket1 %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['trinket1']['id'] }}">{{ result['guild_member']['items']['trinket1']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['trinket1']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/trinket.png"/>
+                {% endif %}
+            </div>
+            <div class="left-item">
+                {% if result['guild_member']['items'].wrist %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['wrist']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['wrist']['icon'] }}.jpg"/> {{ result['guild_member']['items']['wrist']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/wrist.png"/>
+                {% endif %}
+            </div>
+            <div class="right-item">
+                {% if result['guild_member']['items'].trinket2 %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['trinket2']['id'] }}">{{ result['guild_member']['items']['trinket2']['name'] }} <img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['trinket2']['icon'] }}.jpg"/> </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/trinket.png"/>
+                {% endif %}
+            </div>
+            <div style="text-align: center; margin-top: 20px; margin-bottom: 20px; float:left; width:100%">
+                {% if result['guild_member']['items'].mainHand %}
+                <b><a style="margin-right: 20px" class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['mainHand']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['mainHand']['icon'] }}.jpg"/> {{ result['guild_member']['items']['mainHand']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/mainHand.png"/>
+                {% endif %}
+                {% if result['guild_member']['items'].offHand %}
+                <b><a class="item_link" href="http://www.wowhead.com/item={{ result['guild_member']['items']['offHand']['id'] }}"><img style="width:40px; height:40px" src="https://render-eu.worldofwarcraft.com/icons/56/{{ result['guild_member']['items']['offHand']['icon'] }}.jpg"/> {{ result['guild_member']['items']['offHand']['name'] }} </a></b>
+                {% else %}
+                <img style="width:40px; height:40px" src="static/images/empty_slots/offHand.png"/>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="row">
+
+</div>
+
+{% endblock %}
+
