@@ -1,13 +1,14 @@
 from guild_app import app
 from guild_app.util import wowAPI
-from flask import render_template, request as flask_request
+from guild_app.util import tabard_info
+from flask import render_template, request as flask_request, redirect
 import json
 import requests
 import datetime
 
 @app.context_processor
 def inject_tabard():
-    return dict(tabard=wowAPI.tabard)
+    return dict(tabard=tabard_info.tabard)
 
 @app.route("/")
 @app.route("/index")
@@ -19,6 +20,7 @@ def home():
     request = requests.get(url=wowAPI.guild_members_uri + wowAPI.key)
     content = json.loads(request.text)
     result['guild_members'] = content
+    print(result)
     class_dist = {'Warrior': 0, 'Paladin': 0, 'Hunter': 0, 'Rogue': 0, 'Priest': 0, 'Death Knight': 0, 'Shaman': 0,
                   'Mage': 0, 'Warlock': 0, 'Monk': 0, 'Druid': 0, 'Demon Hunter': 0}
     for member in result['guild_members']['members']:
@@ -49,6 +51,7 @@ def member():
     name = flask_request.args.get('name')
     result = {}
     print("{}character/{}/{}?fields=items&locale=en_GB&apikey={}".format(wowAPI.base_uri, realm, name, wowAPI.key))
+    print(tabard_info.tabard)
     request = requests.get(url="{}character/{}/{}?fields=items&locale=en_GB&apikey={}".format(wowAPI.base_uri, realm, name, wowAPI.key))
     content = json.loads(request.text)
     result['guild_member'] = content
@@ -71,3 +74,15 @@ def news():
     else:
         result['news'] = None
     return render_template('news.html', result=result)
+
+@app.route("/tabard")
+def tabard():
+    return render_template("tabard.html")
+
+@app.route("/refresh-tabard")
+def refresh_tabard():
+    request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
+    content = json.loads(request.text)
+    print(content)
+    return content
+    return redirect("/tabard")

@@ -1,8 +1,8 @@
 key = '2ghddk8z67szyz95bbtwcyqcec9bcpvx'
 base_uri = 'https://eu.api.battle.net/wow/'
-guild_news_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Star?fields=news&locale=en_GB&apikey='
-guild_info_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Star?locale=en_GB&apikey='
-guild_members_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Star?fields=members&locale=en_GB&apikey='
+guild_news_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=news&locale=en_GB&apikey='
+guild_info_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?locale=en_GB&apikey='
+guild_members_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=members&locale=en_GB&apikey='
 
 class_map = {1: 'Warrior', 2: 'Paladin', 3: 'Hunter', 4: 'Rogue', 5: 'Priest', 6: 'Death Knight', 7: 'Shaman',
              8: 'Mage', 9: 'Warlock', 10: 'Monk', 11: 'Druid', 12: 'Demon Hunter'}
@@ -34,6 +34,3 @@ blizzard_tabard_logic = {
     "borders": { 0 : "670021", 1 : "672300", 2 : "674500",  3 : "675600", 4 : "639400",  5 : "63a300",  6 : "63b300",
                  7 : "00671f", 8 : "008e90",  9 : "006793", 10 : "00317c",  11 : "6d0077", 12 : "7b0067",  13 : "54370a",
                  14 : "ffffff",  15 : "0f1415", 16 : "f9cc30"}}
-
-tabard = {'emblem': 62, 'border': 3, 'icon color': 0, 'bg color': 49, 'border color': 15,
-          'faction': 'Alliance'}

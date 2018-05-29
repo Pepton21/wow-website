@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabard</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="{{ url_for('static', filename='css/metisMenu.min.css') }}" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="{{ url_for('static', filename='css/timeline.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/startmin.css') }}" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="{{ url_for('static', filename='css/morris.css') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+
+<div class="hero-widget well well-sm" style="width: 276px; margin-left: auto; margin-right: auto; margin-top: 20px">
+    <div class="icon">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="guild-tabard" style="width: 276px">
+
+            <canvas id="guild-tabard" width="220" height="220" style="opacity: 1; margin-left:auto; margin-right:auto; display: block">
+        <div class="guild-tabard-default "></div>
+    </canvas>
+
+</div>
+    </div>
+
+    <div class="options">
+        <a href="/refresh-tabard" class="btn btn-default btn-lg">Refresh Tabard</a>
+    </div>
+</div>
+
+
+<!-- jQuery -->
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="{{ url_for('static', filename='js/metisMenu.min.js') }}"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{{ url_for('static', filename='js/startmin.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/blizzard-guild-tabard.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        var tabard = new GuildTabard('guild-tabard', {
+            'ring': 'alliance',
+            'bg': [ 0, {{ tabard['bg color'] }} ],
+            'border': [ {{ tabard['border'] }}, {{ tabard['border color'] }} ],
+            'emblem': [ {{ tabard['emblem'] }}, {{ tabard['icon color'] }} ]
+        });
+    });
+</script>
+
+
+</body>
+</html>
