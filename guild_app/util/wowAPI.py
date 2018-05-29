@@ -1,5 +1,6 @@
 key = '2ghddk8z67szyz95bbtwcyqcec9bcpvx'
 base_uri = 'https://eu.api.battle.net/wow/'
+tabard_uri = 'http://eu.battle.net/wow/static/images/guild/tabards/'
 guild_news_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=news&locale=en_GB&apikey='
 guild_info_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?locale=en_GB&apikey='
 guild_members_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=members&locale=en_GB&apikey='

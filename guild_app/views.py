@@ -2,6 +2,7 @@ from guild_app import app
 from guild_app.util import wowAPI
 from guild_app.util import tabard_info
 from flask import render_template, request as flask_request, redirect
+import urllib.request as urllib_request
 import json
 import requests
 import datetime
@@ -83,6 +84,13 @@ def tabard():
 def refresh_tabard():
     request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
     content = json.loads(request.text)
-    print(content)
-    return content
+    tabard = {'emblem': content['emblem']['icon'], 'border': content['emblem']['border'], 'icon color': content['emblem']['iconColorId'], 'bg color': content['emblem']['backgroundColorId'], 'border color': content['emblem']['borderColorId'],
+          'faction': 'Alliance'}
+    f = open('guild_app/util/tabard_info.py', 'w')
+    f.write("tabard = " + str(tabard))
+    f.close()
+    emblem = str(content['emblem']['icon']).zfill(2) if content['emblem']['icon'] < 10 else content['emblem']['icon']
+    border = str(content['emblem']['border']).zfill(2) if content['emblem']['border'] < 10 else content['emblem']['border']
+    urllib_request.urlretrieve("{}emblem_{}.png".format(wowAPI.tabard_uri, emblem), "guild_app/static/images/guild/tabards/emblem_{}.png".format(emblem))
+    urllib_request.urlretrieve("{}border_{}.png".format(wowAPI.tabard_uri, border), "guild_app/static/images/guild/tabards/border_{}.png".format(border))
     return redirect("/tabard")

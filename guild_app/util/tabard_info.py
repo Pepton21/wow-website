@@ -1,2 +1,1 @@
-tabard = {'emblem': 62, 'border': 3, 'icon color': 0, 'bg color': 49, 'border color': 15,
-          'faction': 'Alliance'}
+tabard = {'emblem': 181, 'border': 5, 'icon color': 1, 'bg color': 45, 'border color': 15, 'faction': 'Alliance'}
