@@ -91,6 +91,7 @@ def refresh_tabard():
     cursor = cnx.cursor()
     cursor.execute("DELETE FROM GuildTabard")
     cursor.execute(("INSERT INTO GuildTabard (Icon, Border, IconColor, BgColor, BorderColor, faction) VALUES (%(emblem)s, %(border)s, %(icon color)s, %(bg color)s, %(border color)s, %(faction)s)"), tabard)
+    cursor.close()
     emblem = str(content['emblem']['icon']).zfill(2) if content['emblem']['icon'] < 10 else content['emblem']['icon']
     border = str(content['emblem']['border']).zfill(2) if content['emblem']['border'] < 10 else content['emblem']['border']
     urllib_request.urlretrieve("{}emblem_{}.png".format(wowAPI.tabard_uri, emblem), "guild_app/static/images/guild/tabards/emblem_{}.png".format(emblem))
