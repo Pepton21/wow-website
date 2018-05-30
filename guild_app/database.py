@@ -6,7 +6,7 @@ from guild_app.util import crypto
 DATABASE = "crimsonmoon$default"
 USER = "crimsonmoon"
 HOST = "crimsonmoon.mysql.pythonanywhere-services.com"
-f = open("../guild_password.txt")
+f = open("guild_password.txt")
 PASSWORD = f.read()
 f.close()
 
