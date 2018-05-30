@@ -6,3 +6,4 @@ pycrypto
 requests
 psycopg2
 pytz
+mysql
