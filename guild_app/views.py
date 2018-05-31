@@ -60,10 +60,10 @@ def register():
             "INSERT INTO Characters (Name, Realm) VALUES (%(name)s, %(realm)s)"),
             character_data)
         cnx.commit()
-        user_id = cursor.execute("SELECT ID FROM Users WHERE Username = %s", (form.username.data)).one()['ID']
-        character_id = cursor.execute("SELECT ID FROM Characters WHERE Name = %s AND Realm = %s", (name, realm)).one()['ID']
-        cursor.execute("UPDATE Users SET MainChar = %s WHERE ID = %s", (character_id, user_id))
-        cursor.execute("UPDATE Characters SET UserID = %s WHERE ID = %s", (user_id, character_id))
+        user_id = cursor.execute(("SELECT ID FROM Users WHERE Username = %s"), (form.username.data)).one()['ID']
+        character_id = cursor.execute(("SELECT ID FROM Characters WHERE Name = %s AND Realm = %s"), (name, realm)).one()['ID']
+        cursor.execute(("UPDATE Users SET MainChar = %s WHERE ID = %s"), (character_id, user_id))
+        cursor.execute(("UPDATE Characters SET UserID = %s WHERE ID = %s"), (user_id, character_id))
         cnx.commit()
         cursor.close()
         return redirect("/index")
