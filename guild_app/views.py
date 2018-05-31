@@ -40,7 +40,7 @@ def home():
     print(result)
     return render_template('index.html', result=result)
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
     form = forms.RegistrationForm()
     if form.validate_on_submit():
