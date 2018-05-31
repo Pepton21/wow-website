@@ -72,7 +72,7 @@ def register():
 @app.route("/logout")
 def logout():
     flask_session.clear()
-    return redirect("index.html")
+    return redirect("index")
 
 @app.route("/members")
 def members():
