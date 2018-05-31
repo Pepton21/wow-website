@@ -67,7 +67,7 @@ def register():
         cnx.commit()
         cursor.close()
         return redirect("/index")
-    return render_template('login.html', form=form)
+    return render_template('register.html', form=form)
 
 @app.route("/logout")
 def logout():
