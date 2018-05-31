@@ -12,6 +12,15 @@
         #dataTables-members_length{
             text-align: left;
         }
+        .tooltip {
+            display: none; position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: #fff;
+        }
+        .show:hover span {display: block; }
     </style>
 {% endblock%}
 
@@ -34,9 +43,10 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Level</th>
-                                <th>Class</th>
                                 <th>Race</th>
+                                <th>Class</th>
+                                <th>Level</th>
+                                <th>Guild Rank</th>
                                 <th>Gender</th>
                                 <th>Achievement Points</th>
                                 <th></th>
@@ -46,9 +56,10 @@
                             {% for member in result['guild_members']['members'] %}
                             <tr class="{{ 'odd gradeX' if loop.index % 2 == 1 else 'even gradeC' }}">
                                 <td><img style="width:50px; height:50px;" src=" http://render-eu.worldofwarcraft.com/character/{{ member['character']['thumbnail']}}"><span class="text-warning"><b> {{ member['character']['name'] }}</b></span></td>
+                                <td style="vertical-align: middle; line height: 50px;"><img src="https://render-eu.worldofwarcraft.com/icons/18/race_{{ member['character']['race'] }}_{{ member['character']['gender'] }}.jpg"/> {{ member['character']['race_name'] }}</td>
+                                <td style="vertical-align: middle; line height: 50px; color: {{ result['class_colors'][member['character']['class_name']] }}"><img src="https://render-eu.worldofwarcraft.com/icons/18/class_{{ member['character']['class'] }}.jpg"/>  {{ member['character']['class_name'] }} </td>
                                 <td style="vertical-align: middle; line height: 50px;" class="center">{{ member['character']['level'] }}</td>
-                                <td style="vertical-align: middle; line height: 50px; color: {{ result['class_colors'][member['character']['class']] }}"><b>  {{ member['character']['class'] }} </b></td>
-                                <td style="vertical-align: middle; line height: 50px;">{{ member['character']['race'] }}</td>
+                                <td style="vertical-align: middle; line height: 50px; color: {{ result['class_colors'][member['character']['class']] }}">  {{ member['rank'] }}</td>
                                 <td style="vertical-align: middle; line height: 50px;">
                                     {% if member['character']['gender'] == 1 %}
                                     Female (<i class="fa fa-fw" aria-hidden="true" title="Copy to use venus">&#xf221</i>)

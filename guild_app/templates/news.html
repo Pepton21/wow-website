@@ -20,14 +20,14 @@
     <div class="panel-body">
         <ul class="timeline">
             {% for record in result['news'] %}
-            {% if record['type'] == 'itemLoot' or record['type'] == 'playerAchievement' or record['type'] == 'guildAchievement' or record['type'] == 'guildCreated' %}
+            {% if record['type'] == 'itemLoot' or record['type'] == 'playerAchievement' or record['type'] == 'guildAchievement' or record['type'] == 'guildCreated' or record['type'] == 'itemPurchase' %}
             {% if loop.index % 2 == 1 %}
             <li>
             {% else %}
             <li class="timeline-inverted">
             {% endif %}
 
-                {% if record['type'] == 'itemLoot' %}
+                {% if record['type'] == 'itemLoot' or record['type'] == 'itemPurchase'  %}
                 <div class="timeline-badge danger">
                     <i class="fa fa-archive"></i>
                 </div>

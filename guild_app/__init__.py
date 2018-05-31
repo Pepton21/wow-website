@@ -1,6 +1,7 @@
 from flask import Flask
 
 app = Flask(__name__)
+app.secret_key = "Crimson Moon"
 
 import guild_app.views
 """from guild_app.database import db_session

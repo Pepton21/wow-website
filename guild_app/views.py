@@ -1,11 +1,16 @@
 from guild_app import app
 from guild_app.util import wowAPI
 from guild_app.util import tabard_info
-from flask import render_template, request as flask_request, redirect
+from flask import render_template, request as flask_request, redirect, session as flask_session
 import urllib.request as urllib_request
 import json
+import base64
+import hashlib
+from random import choice
+from string import ascii_uppercase
 import requests
 import datetime
+import guild_app.forms as forms
 from guild_app import database as db
 
 @app.context_processor
@@ -15,6 +20,7 @@ def inject_tabard():
 @app.route("/")
 @app.route("/index")
 def home():
+    flask_session['user'] = 'Pepton'
     result = {}
     request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
     content = json.loads(request.text)
@@ -35,6 +41,35 @@ def home():
     print(result)
     return render_template('index.html', result=result)
 
+@app.route("/register")
+def register():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        salt = ''.join(choice(ascii_uppercase) for i in range(10))
+        t_sha = hashlib.sha512()
+        t_sha.update(form.password.data + salt)
+        hashed_password = base64.urlsafe_b64encode(t_sha.digest())
+        cnx = db.get_connection()
+        cursor = cnx.cursor()
+        name, realm = form.username.split('-')
+        user_data = {'username': form.username, 'password': hashed_password, 'salt': salt}
+        cursor.execute((
+            "INSERT INTO Users (Username, PasswordHash, Salt, Role) VALUES (%(username)s, %(password)s, %(salt)s)"),
+            user_data)
+        character_data = {'name': name, 'realm': realm}
+        cursor.execute((
+            "INSERT INTO Characters (Name, Realm) VALUES (%(name)s, %(realm)s)"),
+            character_data)
+        cnx.commit()
+        user_id = cursor.execute("SELECT ID FROM Users WHERE Username = %s", (form.username)).one()['ID']
+        character_id = cursor.execute("SELECT ID FROM Characters WHERE Name = %s AND Realm = %s", (name, realm)).one()['ID']
+        cursor.execute("UPDATE Users SET MainChar = %s WHERE ID = %s", (character_id, user_id))
+        cursor.execute("UPDATE Characters SET UserID = %s WHERE ID = %s", (user_id, character_id))
+        cnx.commit()
+        cursor.close()
+        return redirect("/index")
+    return render_template('login.html', form=form)
+
 @app.route("/members")
 def members():
     result = {}
@@ -42,8 +77,8 @@ def members():
     content = json.loads(request.text)
     result['guild_members'] = content
     for member in result['guild_members']['members']:
-        member['character']['race'] = wowAPI.race_map[member['character']['race']]
-        member['character']['class'] = wowAPI.class_map[member['character']['class']]
+        member['character']['race_name'] = wowAPI.race_map[member['character']['race']]
+        member['character']['class_name'] = wowAPI.class_map[member['character']['class']]
     result['class_colors'] = wowAPI.class_alternate_colors
     return render_template('members.html', result=result)
 
@@ -69,6 +104,7 @@ def news():
     result = {}
     if request.status_code == 200:
         content = json.loads(request.text)
+        print(content)
         for record in content['news']:
             record['timestamp'] = datetime.datetime.fromtimestamp(record['timestamp'] / 1e3)
         result = {}

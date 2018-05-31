@@ -58,18 +58,28 @@
         <ul class="nav navbar-right navbar-top-links">
 
             <li class="dropdown">
+                {% if 'user' in session %}
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> secondtruth <b class="caret"></b>
+                    <i class="fa fa-user fa-fw"></i> {{ session['user'] }}<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="/profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
+                    <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    </li>-->
                     <li class="divider"></li>
-                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
+                {% else %}
+                <a style="display: inline-block;"  href="/login">
+                    Sign In
+                </a>|
+                <a style="display: inline-block;" href="/register">
+                    Register
+                </a>
+                {% endif %}
+
             </li>
         </ul>
 
