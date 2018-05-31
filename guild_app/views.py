@@ -53,7 +53,7 @@ def register():
         name, realm = form.username.data.split('-')
         user_data = {'username': form.username.data, 'password': hashed_password, 'salt': salt, 'role': 1}
         cursor.execute((
-            "INSERT INTO Users (Username, PasswordHash, Salt, Role) VALUES (%(username)s, %(password)s, %(salt)s), %(role)s"),
+            "INSERT INTO Users (Username, PasswordHash, Salt, Role) VALUES (%(username)s, %(password)s, %(salt)s), %(role)s)"),
             user_data)
         character_data = {'name': name, 'realm': realm}
         cursor.execute((
