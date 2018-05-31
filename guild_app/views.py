@@ -46,12 +46,12 @@ def register():
     if form.validate_on_submit():
         salt = ''.join(choice(ascii_uppercase) for i in range(10))
         t_sha = hashlib.sha512()
-        t_sha.update(form.password.data + salt)
+        t_sha.update((form.password.data + salt).encode('utf-8'))
         hashed_password = base64.urlsafe_b64encode(t_sha.digest())
         cnx = db.get_connection()
         cursor = cnx.cursor()
-        name, realm = form.username.split('-')
-        user_data = {'username': form.username, 'password': hashed_password, 'salt': salt}
+        name, realm = form.username.data.split('-')
+        user_data = {'username': form.username.data, 'password': hashed_password, 'salt': salt}
         cursor.execute((
             "INSERT INTO Users (Username, PasswordHash, Salt, Role) VALUES (%(username)s, %(password)s, %(salt)s)"),
             user_data)
@@ -60,7 +60,7 @@ def register():
             "INSERT INTO Characters (Name, Realm) VALUES (%(name)s, %(realm)s)"),
             character_data)
         cnx.commit()
-        user_id = cursor.execute("SELECT ID FROM Users WHERE Username = %s", (form.username)).one()['ID']
+        user_id = cursor.execute("SELECT ID FROM Users WHERE Username = %s", (form.username.data)).one()['ID']
         character_id = cursor.execute("SELECT ID FROM Characters WHERE Name = %s AND Realm = %s", (name, realm)).one()['ID']
         cursor.execute("UPDATE Users SET MainChar = %s WHERE ID = %s", (character_id, user_id))
         cursor.execute("UPDATE Characters SET UserID = %s WHERE ID = %s", (user_id, character_id))

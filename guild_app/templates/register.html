@@ -7,6 +7,12 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+        <style>
+            .errors{
+                color: red;
+            }
+        </style>
+
         <title>Register</title>
 
         <!-- Bootstrap Core CSS -->
@@ -44,16 +50,28 @@
                             <h3 class="panel-title">Register</h3>
                         </div>
                         <div class="panel-body">
+                            <p><b>Note:</b> Your username must be your character name in the following format: <i>Name-Server</i></p>
+                            <hr/>
                             <form role="form" action="" method="post">
                                 <fieldset>
                                     <div class="form-group">
                                         {{ form.username.label }}: {{ form.username(placeholder='Character-Realm') }}
                                     </div>
+                                    <ul class=errors>
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                    </ul>
                                     <div class="form-group">
                                         {{ form.password.label }}: {{ form.password }}
                                     </div>
+                                    <ul class=errors>
+                                    {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                    </ul>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                    <button style="margin-left: auto; margin-right: auto; display: block;" type="submit" class="btn btn-primary btn-lg">Register</button>
                                 </fieldset>
                                 {{ form.csrf_token }}
                             </form>
