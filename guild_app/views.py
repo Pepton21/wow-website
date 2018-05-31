@@ -20,7 +20,6 @@ def inject_tabard():
 @app.route("/")
 @app.route("/index")
 def home():
-    flask_session['user'] = 'Pepton'
     result = {}
     request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
     content = json.loads(request.text)
@@ -69,6 +68,11 @@ def register():
         cursor.close()
         return redirect("/index")
     return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    flask_session.clear()
+    return redirect("index.html")
 
 @app.route("/members")
 def members():
