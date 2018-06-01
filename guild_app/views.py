@@ -68,6 +68,7 @@ def register():
         cursor.execute(("UPDATE Characters SET UserID = %s WHERE ID = %s"), (user_id, character_id))
         cnx.commit()
         cursor.close()
+        cnx.close()
         return redirect("/index")
     return render_template('register.html', form=form)
 
