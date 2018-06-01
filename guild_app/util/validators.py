@@ -22,7 +22,10 @@ class CharacterFree(object):
     def __call__(self, form, field):
         cnx = db.get_connection()
         cursor = cnx.cursor(buffered=True)
-        cursor.execute(("SELECT ID FROM Users WHERE Username = %s"), (field.data,))
+        data = field.data.split('-')
+        name = data[0]
+        realm = data[1]
+        cursor.execute(("SELECT ID FROM Characters WHERE Name = %s AND Realm = %s"), (name, realm))
         if cursor.rowcount != 0:
             cursor.close()
             cnx.close()
