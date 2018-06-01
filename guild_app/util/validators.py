@@ -25,7 +25,7 @@ class UserExists(object):
         cnx = db.get_connection()
         cursor = cnx.cursor(buffered=True)
         cursor.execute(("SELECT ID FROM Users WHERE Username = %s"), (field.data,))
-        if cursor.rowcount != 0:
+        if cursor.rowcount == 0:
             cursor.close()
             cnx.close()
             raise ValidationError(self.message)
@@ -33,7 +33,7 @@ class UserExists(object):
         cnx.close()
 
 class PasswordsMatch(object):
-    def __init__(self, message = 'Username not found!'):
+    def __init__(self, message = 'Incorrect Password'):
         self.message = message
     def __call__(self, form, field):
         cnx = db.get_connection()
