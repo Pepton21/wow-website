@@ -72,6 +72,21 @@ def register():
         return redirect("/index")
     return render_template('register.html', form=form)
 
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        cnx = db.get_connection()
+        cursor = cnx.cursor()
+        cursor.execute(("SELECT Username, Role FROM Users WHERE Username = %s"), (form.username.data,))
+        result = cursor.fetchone()
+        flask_session['username'] = result[0]
+        flask_session['role'] = result[1]
+        cursor.close()
+        cnx.close()
+        return redirect("/index")
+    return render_template('register.html', form=form)
+
 @app.route("/logout")
 def logout():
     flask_session.clear()
