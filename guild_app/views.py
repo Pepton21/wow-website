@@ -85,7 +85,7 @@ def login():
         cursor.close()
         cnx.close()
         return redirect("/index")
-    return render_template('register.html', form=form)
+    return render_template('login.html', form=form)
 
 @app.route("/logout")
 def logout():
