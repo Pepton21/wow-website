@@ -38,7 +38,7 @@ class PasswordsMatch(object):
     def __call__(self, form, field):
         cnx = db.get_connection()
         cursor = cnx.cursor(buffered=True)
-        cursor.execute(("SELECT PasswordHash, Salt FROM Users WHERE Username = %s"), (field.data,))
+        cursor.execute(("SELECT PasswordHash, Salt FROM Users WHERE Username = %s"), (form.username.data,))
         result = cursor.fetchone()
         hash = result[0]
         salt = result[1]
