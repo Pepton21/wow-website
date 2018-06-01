@@ -74,7 +74,7 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    form = forms.RegistrationForm()
+    form = forms.LoginForm()
     if form.validate_on_submit():
         cnx = db.get_connection()
         cursor = cnx.cursor()
