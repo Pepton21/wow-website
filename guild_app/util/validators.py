@@ -39,6 +39,10 @@ class PasswordsMatch(object):
         cnx = db.get_connection()
         cursor = cnx.cursor(buffered=True)
         cursor.execute(("SELECT PasswordHash, Salt FROM Users WHERE Username = %s"), (form.username.data,))
+        if cursor.rowcount == 0:
+            cursor.close()
+            cnx.close()
+            raise ValidationError(self.message)
         result = cursor.fetchone()
         hash = result[0]
         salt = result[1]
