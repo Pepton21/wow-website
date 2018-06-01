@@ -21,7 +21,7 @@ class CharacterFree(object):
         self.message = message
     def __call__(self, form, field):
         cnx = db.get_connection()
-        cursor = cnx.cursor()
+        cursor = cnx.cursor(buffered=True)
         cursor.execute(("SELECT ID FROM Users WHERE Username = %s"), (field.data,))
         if cursor.rowcount != 0:
             cursor.close()
