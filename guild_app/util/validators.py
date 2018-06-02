@@ -49,8 +49,7 @@ class PasswordsMatch(object):
         t_sha = hashlib.sha512()
         t_sha.update((field.data + salt).encode('utf-8'))
         hashed_password = base64.urlsafe_b64encode(t_sha.digest())
-        if hash != hashed_password:
-            print(hash, hashed_password, hashed_password.decode('utf-8'))
+        if hash != hashed_password.decode('utf-8'):
             cursor.close()
             cnx.close()
             raise ValidationError(self.message)
