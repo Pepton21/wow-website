@@ -1,9 +1,9 @@
-key = '2ghddk8z67szyz95bbtwcyqcec9bcpvx'
-base_uri = 'https://eu.api.battle.net/wow/'
-tabard_uri = 'http://eu.battle.net/wow/static/images/guild/tabards/'
-guild_news_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=news&locale=en_GB&apikey='
-guild_info_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?locale=en_GB&apikey='
-guild_members_uri = 'https://eu.api.battle.net/wow/guild/Arathor/Crimson%20Moon?fields=members&locale=en_GB&apikey='
+key = '277fd8e7f23e4672acafb416869e560b'#'2ghddk8z67szyz95bbtwcyqcec9bcpvx'
+base_uri = 'https://eu.api.blizzard.com/wow/'
+tabard_uri = 'http://eu.api.blizzard.com/wow/static/images/guild/tabards/'
+guild_news_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?fields=news&locale=en_GB&apikey='
+guild_info_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?locale=en_GB&apikey='
+guild_members_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?fields=members&locale=en_GB&apikey='
 
 class_map = {1: 'Warrior', 2: 'Paladin', 3: 'Hunter', 4: 'Rogue', 5: 'Priest', 6: 'Death Knight', 7: 'Shaman',
              8: 'Mage', 9: 'Warlock', 10: 'Monk', 11: 'Druid', 12: 'Demon Hunter'}
