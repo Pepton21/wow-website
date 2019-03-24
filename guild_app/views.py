@@ -8,23 +8,70 @@ import base64
 import hashlib
 from random import choice
 from string import ascii_uppercase
+from datetime import timedelta
 import requests
 import datetime
 import guild_app.forms as forms
 from guild_app import database as db
 
+
+def requires_rank(required_rank):
+    def requires_roles_decorator(func):
+        def func_wrapper():
+            rank = flask_session['rank']
+            if rank != required_rank:
+                return render_template("/access_denied.html")
+            return func()
+
+        func_wrapper.__name__ = func.__name__
+        return func_wrapper
+    return requires_roles_decorator
+
+def requires_login(func):
+    def func_wrapper():
+        if flask_session.get('user_info') == None:
+            return redirect('/')
+        return func()
+
+    func_wrapper.__name__ = func.__name__
+    return func_wrapper
+
+def requires_token(func):
+    def func_wrapper():
+        if flask_session.get('access_token') == None:
+            payload = {}
+            payload['grant_type'] = "client_credentials"
+            payload['redirect_uri'] = "localhost/index"
+            r = json.loads(requests.post('https://eu.battle.net/oauth/token', data=payload,
+                                         auth=(wowAPI.client_id, wowAPI.client_secret)).text)
+            flask_session['access_token'] = r['access_token']
+        return func()
+
+    func_wrapper.__name__ = func.__name__
+    return func_wrapper
+
+
 @app.context_processor
 def inject_tabard():
     return dict(tabard=tabard_info.tabard)
 
+@app.before_request
+def make_session_permanent():
+    flask_session.permanent = True
+    app.permanent_session_lifetime = timedelta(seconds=86000)
+
 @app.route("/")
 @app.route("/index")
+@requires_token
 def home():
+    """if 'access_token' not in flask_session:
+        get_access_token()"""
     result = {}
-    request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
+    request = requests.get(url=wowAPI.guild_info_uri + flask_session['access_token'])
+    print(wowAPI.guild_info_uri + flask_session['access_token'])
     content = json.loads(request.text)
     result['guild_info'] = content
-    request = requests.get(url=wowAPI.guild_members_uri + wowAPI.key)
+    request = requests.get(url=wowAPI.guild_members_uri + flask_session['access_token'])
     content = json.loads(request.text)
     result['guild_members'] = content
     print(result)
@@ -93,9 +140,10 @@ def logout():
     return redirect("index")
 
 @app.route("/members")
+@requires_token
 def members():
     result = {}
-    request = requests.get(url=wowAPI.guild_members_uri + wowAPI.key)
+    request = requests.get(url=wowAPI.guild_members_uri + flask_session['access_token'])
     content = json.loads(request.text)
     result['guild_members'] = content
     for member in result['guild_members']['members']:
@@ -105,13 +153,14 @@ def members():
     return render_template('members.html', result=result)
 
 @app.route("/member")
+@requires_token
 def member():
     realm = flask_request.args.get('realm')
     name = flask_request.args.get('name')
     result = {}
-    print("{}character/{}/{}?fields=items&locale=en_GB&apikey={}".format(wowAPI.base_uri, realm, name, wowAPI.key))
+    print("{}character/{}/{}?fields=items&locale=en_GB&access_token={}".format(wowAPI.base_uri, realm, name, flask_session['access_token']))
     print(tabard_info.tabard)
-    request = requests.get(url="{}character/{}/{}?fields=items&locale=en_GB&apikey={}".format(wowAPI.base_uri, realm, name, wowAPI.key))
+    request = requests.get(url="{}character/{}/{}?fields=items&locale=en_GB&access_token={}".format(wowAPI.base_uri, realm, name, flask_session['access_token']))
     content = json.loads(request.text)
     result['guild_member'] = content
     result['class_colors'] = wowAPI.class_alternate_colors
@@ -121,8 +170,9 @@ def member():
     return render_template('member.html', result=result)
 
 @app.route("/news")
+@requires_token
 def news():
-    request = requests.get(url=wowAPI.guild_news_uri + wowAPI.key)
+    request = requests.get(url=wowAPI.guild_news_uri + flask_session['access_token'])
     result = {}
     if request.status_code == 200:
         content = json.loads(request.text)
@@ -140,15 +190,16 @@ def tabard():
     return render_template("tabard.html")
 
 @app.route("/refresh-tabard")
+@requires_token
 def refresh_tabard():
-    request = requests.get(url=wowAPI.guild_info_uri + wowAPI.key)
+    request = requests.get(url=wowAPI.guild_info_uri + flask_session['access_token'])
     content = json.loads(request.text)
     tabard = {'emblem': content['emblem']['icon'], 'border': content['emblem']['border'], 'icon color': content['emblem']['iconColorId'], 'bg color': content['emblem']['backgroundColorId'], 'border color': content['emblem']['borderColorId'],
           'faction': 'Alliance'}
     cnx = db.get_connection()
     cursor = cnx.cursor()
     cursor.execute("DELETE FROM GuildTabard")
-    cursor.execute(("INSERT INTO GuildTabard (Icon, Border, IconColor, BgColor, BorderColor, faction) VALUES (%(emblem)s, %(border)s, %(icon color)s, %(bg color)s, %(border color)s, %(faction)s)"), tabard)
+    cursor.execute(("INSERT INTO GuildTabard (Icon, Border, IconColor, BgColor, BorderColor, Faction) VALUES (%(emblem)s, %(border)s, %(icon color)s, %(bg color)s, %(border color)s, %(faction)s)"), tabard)
     cnx.commit()
     cursor.close()
     emblem = str(content['emblem']['icon']).zfill(2) if content['emblem']['icon'] < 10 else content['emblem']['icon']

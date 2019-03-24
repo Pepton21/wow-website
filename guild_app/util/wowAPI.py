@@ -1,9 +1,10 @@
-key = '277fd8e7f23e4672acafb416869e560b'#'2ghddk8z67szyz95bbtwcyqcec9bcpvx'
+client_secret = '3u7WI335rjxcJiKsUbj4GMewrdgDnUID'
+client_id = '277fd8e7f23e4672acafb416869e560b'
 base_uri = 'https://eu.api.blizzard.com/wow/'
 tabard_uri = 'http://eu.api.blizzard.com/wow/static/images/guild/tabards/'
-guild_news_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?fields=news&locale=en_GB&apikey='
-guild_info_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?locale=en_GB&apikey='
-guild_members_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/Crimson%20Moon?fields=members&locale=en_GB&apikey='
+guild_news_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/The%20Forgotten%20Few?fields=news&locale=en_GB&access_token='
+guild_info_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/The%20Forgotten%20Few?locale=en_GB&access_token='
+guild_members_uri = 'https://eu.api.blizzard.com/wow/guild/Arathor/The%20Forgotten%20Few?fields=members&locale=en_GB&access_token='
 
 class_map = {1: 'Warrior', 2: 'Paladin', 3: 'Hunter', 4: 'Rogue', 5: 'Priest', 6: 'Death Knight', 7: 'Shaman',
              8: 'Mage', 9: 'Warlock', 10: 'Monk', 11: 'Druid', 12: 'Demon Hunter'}
@@ -17,7 +18,7 @@ class_alternate_colors = {'Warrior': '#c69b6d', 'Paladin': '#f48cba', 'Hunter': 
                           'Warlock': '#9382c9', 'Monk': '#008467', 'Druid': '#ff7c0a', 'Demon Hunter': '#a330c9'}
 
 race_map = {1: 'Human', 3: 'Dwarf', 4: 'Night Elf', 7: 'Gnome', 11: 'Draenei', 22: 'Worgen', 24: 'Pandaren',
-            25: 'Pandaren', 29: 'Void Elf', 30: 'Lightforged Draenei'}
+            25: 'Pandaren', 29: 'Void Elf', 30: 'Lightforged Draenei', 32: 'Kul Tiran', 34: 'Dark Iron Dwarf'}
 
 blizzard_tabard_logic = {
     "backgrounds": {0 : "ff2088", 1 : "bd005b", 2 : "9e0036", 3 : "ff891b", 4 : "e14500", 5 : "b1002e",
